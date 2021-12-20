@@ -1,4 +1,4 @@
-# mysqlchk
+# mysqlchk for galera
 
 Based on ClusterControl's mysqlchk script but built for Galera. It detects the Galera status on the database node as per below:
 
