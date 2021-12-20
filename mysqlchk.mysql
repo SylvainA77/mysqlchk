@@ -11,13 +11,12 @@
 
 SLAVE_LAG_LIMIT=5
 MYSQL_HOST="localhost"
-MYSQL_PORT="@MYSQL_PORT@"
 MYSQL_USERNAME='@MYSQL_USER@'
 MYSQL_PASSWORD='@MYSQL_PASSWORD@'
 MYSQL_BIN='@MYSQL_BIN@'
 MYSQL_OPTS="-q -A --connect-timeout=10"
-TMP_FILE="/dev/shm/mysqlchk.$$.out"
-ERR_FILE="/dev/shm/mysqlchk.$$.err"
+TMP_FILE="/tmp/mysqlchk.$$.out"
+ERR_FILE="/tmp/mysqlchk.$$.err"
 FORCE_FAIL="/dev/shm/proxyoff"
 
 preflight_check()
@@ -71,7 +70,7 @@ if [ -f "$FORCE_FAIL" ]; then
         return_fail
 fi
 
-CMDLINE="$MYSQL_BIN $MYSQL_OPTS --host=$MYSQL_HOST --port=$MYSQL_PORT --user=$MYSQL_USERNAME --password=$MYSQL_PASSWORD -e"
+CMDLINE="mysql $MYSQL_OPTS --user=$MYSQL_USERNAME --password=$MYSQL_PASSWORD -e"
 # SLAVE_IO=$(${CMDLINE} 'SHOW SLAVE STATUS' --vertical 2>/dev/null | grep Slave_IO_Running |  tail -1 | awk {'print $2'})
 # SLAVE_SQL=$(${CMDLINE} 'SHOW SLAVE STATUS' --vertical 2>/dev/null | grep Slave_SQL_Running | head -1 | awk {'print $2'})
 PRIMARY=$(${CMDLINE} 'SHOW GLOBAL STATUS' --vertical 2>/dev/null | grep wsrep_cluster_status | head -1 | awk {'print $2'})
