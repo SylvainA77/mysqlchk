@@ -89,7 +89,7 @@ PRIMARY=$(${CMDLINE} 'SHOW GLOBAL STATUS' --vertical 2>/dev/null | grep wsrep_cl
 #    [[ "${READ_ONLY}" == "OFF" ]] && return_ok
 #fi
 
-if [[ "${PRIMARY}" == "Primary" ]]}; then 
+if [[ "${PRIMARY}" == "Primary" ]]; then 
     return_ok
 else 
     return_fail
