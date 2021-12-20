@@ -1,0 +1,12 @@
+service mysqlchk
+{
+        flags           = REUSE
+        socket_type     = stream
+        port            = 9200
+        wait            = no
+        user            = nobody
+        server          = mysqlchk
+        log_on_failure  += USERID
+        disable         = no
+        per_source      = UNLIMITED
+}
