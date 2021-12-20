@@ -41,13 +41,13 @@ return_ok()
     echo -e "Content-Type: text/html\r\n"
     echo -e "Content-Length: 43\r\n"
     echo -e "\r\n"
-    if [ $role == "master" ]; then
-        echo -e "<html><body>MySQL master is running.</body></html>\r\n"
-    elif [ $role == "slave" ]; then
-        echo -e "<html><body>MySQL slave is running. (Slave lag: $SLAVE_LAG)</body></html>\r\n"
-    else
+    #if [ $role == "master" ]; then
+    #    echo -e "<html><body>MySQL master is running.</body></html>\r\n"
+    #elif [ $role == "slave" ]; then
+    #    echo -e "<html><body>MySQL slave is running. (Slave lag: $SLAVE_LAG)</body></html>\r\n"
+    #else
         echo -e "<html><body>MySQL is running.</body></html>\r\n"
-    fi
+    #fi
     echo -e "\r\n"
   #  rm $ERR_FILE $TMP_FILE
     exit 0
@@ -73,7 +73,7 @@ fi
 CMDLINE="mysql $MYSQL_OPTS --user=$MYSQL_USERNAME --password=$MYSQL_PASSWORD -e"
 # SLAVE_IO=$(${CMDLINE} 'SHOW SLAVE STATUS' --vertical 2>/dev/null | grep Slave_IO_Running |  tail -1 | awk {'print $2'})
 # SLAVE_SQL=$(${CMDLINE} 'SHOW SLAVE STATUS' --vertical 2>/dev/null | grep Slave_SQL_Running | head -1 | awk {'print $2'})
-PRIMARY=$(${CMDLINE} 'SHOW GLOBAL STATUS' --vertical 2>/dev/null | grep wsrep_cluster_status | head -1 | awk {'print $2'})
+PRIMARY=$(mysql --user=$MYSQL_USERNAME --password=$MYSQL_PASSWORD --batch -e 'SHOW GLOBAL STATUS' | grep wsrep_cluster_status | cut -f2)
 
 #if [[ "${SLAVE_IO}" == "Yes" ]] && [[ "${SLAVE_SQL}" == "Yes" ]]; then
 #    role='slave'
