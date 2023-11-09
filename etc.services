@@ -1,1 +1,2 @@
 mysqlchk  9200/tcp
+maxscalechk 9201/tcp
