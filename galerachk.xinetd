@@ -1,11 +1,11 @@
-service mysqlchk
+service galerachk
 {
         flags           = REUSE
         socket_type     = stream
         port            = 9200
         wait            = no
         user            = nobody
-        server          = /usr/local/sbin/mysqlchk
+        server          = /usr/local/sbin/galerachk
         log_on_failure  += USERID
         disable         = no
         per_source      = UNLIMITED
