@@ -38,9 +38,10 @@ listen  galera
         server node3 192.168.55.113:3306 check
 ```
 
+
 # maxscalechk
 
-Based on ClusterControl's mysqlchk script but built for Maxscale. It detects the Maxscale status on the database node as per below:
+Based on ClusterControl's mysqlchk script but built for Maxscale. It detects the Maxscale status on the proxy node as per below:
 
 * if maxctrl list servers has return code 0,
  * return 'Maxscale is running.'
@@ -52,7 +53,7 @@ Based on ClusterControl's mysqlchk script but built for Maxscale. It detects the
 
 1) Install HAProxy on the selected node. 
 
-2) Grab the maxszcalechk.service file from this repo and place it in /usr/local/sbin/ of the maxsclae servers
+2) Grab the maxscalechk.service file from this repo and place it in /usr/local/sbin/ of the maxscale servers
 
 3) Update required informations :
 ```bash
@@ -60,16 +61,16 @@ MXS_USERNAME='user'
 MXS_PASSWORD='password'
 ```
 
-4) Deploy the xinetd service on the maxsclae machines as per below :
+4) Deploy the xinetd service on the maxscale machines as per below :
 add maxscalechk file to  /etc/xinetd.d directory on maxscale servers
  
 5) link the new service and a port
 edit /etc/services and add the content of etc.services.maxscale on maxscale servers
 
-6) You are good to go.use ``option tcp-check`` & ``tcp-check expect`` to distinguish master/slave similar to example below:
+6) You are good to go.use ``option tcp-check`` & ``tcp-check expect`` :
 ```bash
 
-listen  maxzcale
+listen  maxcale
         bind *:3306
         mode tcp
         #timeout client  10800s
