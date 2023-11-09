@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# This script checks if a mysql server is healthy running on localhost. It will
+# return:
+# "HTTP/1.x 200 OK\r" (if maxscale is running smoothly)
+# - OR -
+# "HTTP/1.x 500 Internal Server Error\r" (else)
+#
+# The purpose of this script is make haproxy capable of monitoring maxscale properly
+#
+###
+#              |||
+# +------ooOO-(O O)-OOoo------+
+# |            (_)            |
+# |     Sylvain  Arbaudie     |
+# |   arbaudie.it@gmail.com   |
+# +---------------------------+
+###
+# original code & doc by Sylvain Arbaudie
+# github repo : https://github.com/SylvainA77/mysqlchk-galera
+###
+
+MXS_USERNAME='@MXS_USER@'
+MXS_PASSWORD='@MXS_PASSWORD@'
+
+return_ok()
+{
+    echo -e "HTTP/1.1 200 OK\r\n"
+    echo -e "Content-Type: text/html\r\n"
+    echo -e "Content-Length: 43\r\n"
+    echo -e "\r\n"
+    echo -e "<html><body>Maxscale is running. $NODES_UP servers up.</body></html>\r\n"
+    echo -e "\r\n"
+    exit 0
+}
+return_fail()
+{
+    echo -e "HTTP/1.1 503 Service Unavailable\r\n"
+    echo -e "Content-Type: text/html\r\n"
+    echo -e "Content-Length: 42\r\n"
+    echo -e "\r\n"
+    echo -e "<html><body>Maxscale is *down*.</body></html>\r\n"
+    echo -e "\r\n"
+    exit 1
+}
+
+NODES_UP=`maxctrl --user=$MXS_USERNAME --password=$MXS_PASSWORD --tsv list servers | wc -l `
+ret=$?
+
+if [[ "$ret" == 0 ]]; then 
+    return_ok
+else 
+    return_fail
+fi
