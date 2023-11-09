@@ -12,7 +12,7 @@ Based on ClusterControl's mysqlchk script but built for Galera. It detects the G
 
 1) Install HAProxy on the selected node. 
 
-2) Grab the file from this repo and place it inb /usr/local/sbin/
+2) Grab the file galerachk.mysql from this repo and place it inb /usr/local/sbin/
 
 3) Update required informations :
 ```bash
