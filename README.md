@@ -1,9 +1,9 @@
 # mysqlchk for galera
 
-Based on ClusterControl's mysqlchk script but built for Galera. It detects the Galera status on the database node as per below:
+Based on ClusterControl's mysqlchk script but built for Galera. It detects the Galera status on the cluster node as per below:
 
 * if wsrep_cluster_status is Primary,
- * return 'MySQL master is running.'
+ * return 'MySQL is running.'
 
 * else
  * return 'MySQL is \*down\*'
